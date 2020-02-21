@@ -7,10 +7,11 @@
 # from the Coding and Information Theory class at UMass Lowell
 # EECE 5480 - Spring 2020
 
-def compress():
+import sys
 
+def compress():
     #Require program to begin with file
-    inputFile = argv[1]
+    inputFile = sys.argv[1]
 
     #Open File to Compress
     with open(inputFile) as uncompressedFile:
@@ -18,31 +19,27 @@ def compress():
 
     #Create compression index
     compressionIndex = 0
-
-    #create null character
+    #define null character
     null = ''
 
-    #Assign null as the new character
-    newCharacter = null
+    tokenArray=[]
 
-    #create a dictionary with 0th element
-    compressionDictionary = {compressionIndex:newCharacter}
+    #create a dictionary with 0th element set as null
+    currentCharacter = null
+    compressionDictionary = {compressionIndex : currentCharacter}
 
     #start reading file uncompressedFileContents
     for character in uncompressedFileContents:
-        currentCharacter = newCharacter + character
-
         if currentCharacter in compressionDictionary.values():
-            newCharacter = currentCharacter
+            currentCharacter+=character
         else:
+            tokenArray.append(character)
             compressionIndex+=1
-            compressionDictionary[compressionIndex] = newCharacter
-            newCharacter = character
+            compressionDictionary[compressionIndex] = currentCharacter
+            currentCharacter = character
 
+    print(compressionDictionary)
     #Read file for first element and add to dictionary.
-
-
-
 
 if __name__ == '__main__':
     compress()

@@ -2,10 +2,9 @@
 
 ### Setup
 
-- [X] Install Python and add to PATH
+- [X] Install Python and add to PATH<br>Python 3+ recommended
 - [X] Clone or Download this directory
-- [X] Run the following command
-* __pip install -r requirements.txt__
+- [X] Run the following command <br>__pip install -r requirements.txt__
 
 ### How To Run
 
@@ -14,7 +13,7 @@
 ### Copyright Information
 MIT License
 
-The license and copyright information needed for attribution if you so wish can be found in [LICENSE](https://github.com/francman/LZ78/blob/master/LICENSE) document.
+The license and copyright information needed for attribution can be found in [LICENSE](https://github.com/francman/LZ78/blob/master/LICENSE) document.
 
 The [LICENSE](https://github.com/francman/LZ78/blob/master/LICENSE) document is located in the root directory of the project.
 
