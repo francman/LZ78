@@ -22,6 +22,9 @@ def compress():
     #define null character
     null = ''
 
+    tokenNumber = 0
+    end=0
+    tokenCharacter =''
     tokenArray=[]
 
     #create a dictionary with 0th element set as null
@@ -30,14 +33,32 @@ def compress():
 
     #start reading file uncompressedFileContents
     for character in uncompressedFileContents:
+
         if currentCharacter in compressionDictionary.values():
             currentCharacter+=character
+            end = 1
+
         else:
-            tokenArray.append(character)
             compressionIndex+=1
             compressionDictionary[compressionIndex] = currentCharacter
             currentCharacter = character
+            
 
+
+        if (character or currentCharacter) in compressionDictionary.values():
+            #Get the key to the value
+            for key, value in compressionDictionary.items():
+                if value == currentCharacter:
+                    tokenNumber = key    
+        else:
+            tokenNumber=0
+        
+        if end:
+            print('{}{}'.format(tokenNumber, character))
+            end=0
+            
+
+    #tokenCharacter = character
     print(compressionDictionary)
     #Read file for first element and add to dictionary.
 
