@@ -10,57 +10,45 @@
 import sys
 
 def compress():
-    #Require program to begin with file
-    inputFile = sys.argv[1]
 
-    #Open File to Compress
-    with open(inputFile) as uncompressedFile:
-        uncompressedFileContents = uncompressedFile.read()
-
-    #Create compression index
-    compressionIndex = 0
+    #Compression index for dictionary navigation
+    compressionIndex = 1
+    
     #define null character
     null = ''
 
-    tokenNumber = 0
-    end=0
-    tokenCharacter =''
-    tokenArray=[]
+    #Require program to begin with file
+    inputFile = sys.argv[1]
+
+    outputFile = open((inputFile + '.lz78'), "wb")
+
+    #Open File to Compress
+    with open(inputFile, "rb") as uncompressedFile:
+        uncompressedFileContents = uncompressedFile.read()
+
+    outputFile.write('0'+uncompressedFileContents[0])
 
     #create a dictionary with 0th element set as null
     currentCharacter = null
-    compressionDictionary = {compressionIndex : currentCharacter}
+    compressionDictionary = {uncompressedFileContents[0] : str(compressionIndex)}
+    uncompressedFileContents = uncompressedFileContents[1:]
 
+    compressionIndex += 1
     #start reading file uncompressedFileContents
     for character in uncompressedFileContents:
-
-        if currentCharacter in compressionDictionary.values():
-            currentCharacter+=character
-            end = 1
-
-        else:
-            compressionIndex+=1
-            compressionDictionary[compressionIndex] = currentCharacter
-            currentCharacter = character
-            
-
-
-        if (character or currentCharacter) in compressionDictionary.values():
-            #Get the key to the value
-            for key, value in compressionDictionary.items():
-                if value == currentCharacter:
-                    tokenNumber = key    
-        else:
-            tokenNumber=0
+        currentCharacter += character
         
-        if end:
-            print('{}{}'.format(tokenNumber, character))
-            end=0
+        if currentCharacter not in compressionDictionary:
+            compressionDictionary[currentCharacter] = str(compressionIndex)
+            if len(currentCharacter) == 1:
+                outputFile.write('0'+currentCharacter)
+            else:
+                outputFile.write(compressionDictionary[currentCharacter[0:-1]] + currentCharacter[-1])
             
+            compressionIndex += 1
+            currentCharacter = null
 
-    #tokenCharacter = character
-    print(compressionDictionary)
-    #Read file for first element and add to dictionary.
+    outputFile.close()
 
 if __name__ == '__main__':
     compress()
