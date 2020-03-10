@@ -19,16 +19,13 @@ def decompress():
 
     #define null character
     null = ''
-    outputFile = open((inputFile + '.uncompressed'), "wb")
     
     #Open File to Decompress
     with open(inputFile, "rb") as compressedFile:
         compressedFileContents= compressedFile.read()
-
+    outputFile = open((inputFile + '.uncompressed'), "wb")
     decompressionDictionary = {'0': '', '1': compressedFileContents[1]}
-
     outputFile.write(decompressionDictionary['1'])
-
     compressedFileContents = compressedFileContents[2:]
 
     currentCharacter = null
@@ -36,7 +33,7 @@ def decompress():
     decompressionIndex = 2
 
     for character in compressedFileContents:
-        if character in str(range(10)):
+        if character in '1234567890':
             currentCharacter += character
         else:
             decompressionDictionary[str(decompressionIndex)] = decompressionDictionary[currentCharacter] + character
