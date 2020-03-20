@@ -13,41 +13,32 @@ def compress():
 
     #Compression index for dictionary navigation
     compressionIndex = 1
-    
     #define null character
     null = ''
-
     #Require program to begin with file
     inputFile = sys.argv[1]
-
-    outputFile = open((inputFile + '.lz78'), "wb")
-
+    outputFile = open((inputFile + '.lz78'), "w")
     #Open File to Compress
-    with open(inputFile, "rb") as uncompressedFile:
+    with open(inputFile, "r") as uncompressedFile:
         uncompressedFileContents = uncompressedFile.read()
 
     outputFile.write('0'+uncompressedFileContents[0])
-
     #create a dictionary with 0th element set as null
     currentCharacter = null
     compressionDictionary = {uncompressedFileContents[0] : str(compressionIndex)}
     uncompressedFileContents = uncompressedFileContents[1:]
-
     compressionIndex += 1
     #start reading file uncompressedFileContents
     for character in uncompressedFileContents:
         currentCharacter += character
-        
         if currentCharacter not in compressionDictionary:
             compressionDictionary[currentCharacter] = str(compressionIndex)
             if len(currentCharacter) == 1:
                 outputFile.write('0'+currentCharacter)
             else:
                 outputFile.write(compressionDictionary[currentCharacter[0:-1]] + currentCharacter[-1])
-            
             compressionIndex += 1
             currentCharacter = null
-
     outputFile.close()
 
 if __name__ == '__main__':
