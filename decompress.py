@@ -19,11 +19,13 @@ def decompress():
 
     #define null character
     null = ''
-    outputFile = open((inputFile + '.uncompressed'), "w")
-    
+
     #Open File to Decompress
     with open(inputFile, "r") as compressedFile:
         compressedFileContents= compressedFile.read()
+
+    outputFile = open((inputFile + '.uncompressed'), "wb")
+
     decompressionDictionary = {'0': '', '1': compressedFileContents[1]}
     outputFile.write(decompressionDictionary['1'])
     compressedFileContents = compressedFileContents[2:]
@@ -40,7 +42,7 @@ def decompress():
             decompressionIndex += 1
 
     outputFile.close()
-    
+
 
 if __name__ == '__main__':
     decompress()

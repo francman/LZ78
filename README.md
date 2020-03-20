@@ -19,6 +19,7 @@ This program takes an input file and compresses it using Lempel-Ziv Algorithm fr
 ## Known Bugs
 
 - The last coded token is lost during compressiong, this results is missing a characters after decompressing.
+- LZ78 uses numbers in its token/dictionary, therefore, when your input string contains numbers - the program will very likely crash and stop decoding midway (when it encounters a number). Workaround not found yet.
 
 ## Test
  Input: ABAABABAABAB
